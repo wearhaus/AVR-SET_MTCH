@@ -90,9 +90,13 @@ int main(void)
 	sysclk_init();
 	//board_init();
 //	ioport_configure_pin(IOPORT_CREATE_PIN(PORTC, 3), IOPORT_DIR_OUTPUT | IOPORT_INIT_LOW);
+
+#ifdef ZXL_WDT_ENABLE
 	/* Set the timeout period for the watchdog - 8 ms */
-	//wdt_set_timeout_period(WDT_TIMEOUT_PERIOD_8KCLK);
-	
+	wdt_set_timeout_period(WDT_TIMEOUT_PERIOD_2KCLK);
+      wdt_reset(); 
+	wdt_enable();
+#endif	
 	
 	init_uart();
 	init_ws2812(IOPORT_CREATE_PIN(PORTC, 6));
@@ -157,6 +161,9 @@ int main(void)
 	// Insert application code here, after the board has been initialized.
 	while(1)
 	{
+        #ifdef ZXL_WDT_ENABLE
+                wdt_reset(); 
+        #endif
 		if (latest_gesture) {
 			//twinkle(255, 0, 255);
 			switch (latest_gesture) {

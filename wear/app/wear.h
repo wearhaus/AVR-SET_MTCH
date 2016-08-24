@@ -11,6 +11,8 @@
 
 #include <ws2812.h>
 
+#define ZXL_WDT_ENABLE
+
 extern volatile uint8_t core_status;
 extern volatile uint8_t led_status;
 extern volatile uint8_t old_core_status;
