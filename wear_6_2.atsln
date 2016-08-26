@@ -1,0 +1,20 @@
+
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Atmel Studio Solution File, Format Version 11.00
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "wear", "wear\wear_6_2.cproj", "{A100FE10-F5A5-46D2-96E3-FF1FAE274EBE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A100FE10-F5A5-46D2-96E3-FF1FAE274EBE}.Debug|AVR.ActiveCfg = Debug|AVR
+		{A100FE10-F5A5-46D2-96E3-FF1FAE274EBE}.Debug|AVR.Build.0 = Debug|AVR
+		{A100FE10-F5A5-46D2-96E3-FF1FAE274EBE}.Release|AVR.ActiveCfg = Release|AVR
+		{A100FE10-F5A5-46D2-96E3-FF1FAE274EBE}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

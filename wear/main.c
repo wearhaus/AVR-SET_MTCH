@@ -39,6 +39,7 @@ uint8_t new_message_ID;
 uint8_t fht_flag = false;		//judge if the fht led function was turned on or off
 char response[2] = {0, 0};
 
+/*
 uint8_t playPauseColor[9] = {0, 128, 128, 0, 128, 128, 0, 128, 128};
 uint8_t forwardColor[9] = {0, 128, 128, 0, 0, 0, 0, 0, 0};
 uint8_t backwardColor[9] = {0, 0, 0, 0, 128, 128, 0, 0, 0};
@@ -46,6 +47,7 @@ uint8_t volumeUpColor[9] = {0, 0, 0, 0, 0, 0, 0, 128, 128};
 uint8_t volumeDownColor[9] = {0, 128, 128, 0, 128, 128, 0, 0, 0};
 uint8_t connDiscColor[9] = {0, 128, 0, 0, 0, 0, 0, 128, 0};
 uint8_t inquiryColor[9] = {0, 0, 0, 128, 128, 0, 128, 128, 0};
+*/
 
 static void test_pin(void) {
 	ioport_configure_pin(IOPORT_CREATE_PIN(PORTA, 6), IOPORT_DIR_OUTPUT | IOPORT_INIT_LOW);
@@ -94,7 +96,7 @@ int main(void)
 #ifdef ZXL_WDT_ENABLE
 	/* Set the timeout period for the watchdog - 8 ms */
 	wdt_set_timeout_period(WDT_TIMEOUT_PERIOD_2KCLK);
-      wdt_reset(); 
+    wdt_reset(); 
 	wdt_enable();
 #endif	
 	
@@ -122,7 +124,7 @@ int main(void)
 	// restore the state stored in the eeprom
 	// restore_state_eep();
 	
-	rainbow();
+	//rainbow();
 	restore_led_from_eeprom();
 	
 	core_status = STATUS_CHARGE;
@@ -170,49 +172,49 @@ int main(void)
 				case PLAY:
 					ioport_set_pin_high(IOPORT_CREATE_PIN(PORTA, 5));
 					//twinkle(255, 0, 0);
-					set_temp_color(playPauseColor);
+					//set_temp_color(playPauseColor);
 					_delay_ms(2000); //twinkle(0, 0, 0);
 					ioport_set_pin_low(IOPORT_CREATE_PIN(PORTA, 5));
 					break;
 				case NEXT:
 					ioport_set_pin_high(IOPORT_CREATE_PIN(PORTA, 6));
 					//twinkle(255, 255, 0);
-					set_temp_color(forwardColor);
+					//set_temp_color(forwardColor);
 					_delay_ms(2000); //twinkle(0, 0, 0);
 					ioport_set_pin_low(IOPORT_CREATE_PIN(PORTA, 6));
 					break;
 				case PREV:
 					ioport_set_pin_high(IOPORT_CREATE_PIN(PORTA, 7));
 					//twinkle(0, 255, 0);
-					set_temp_color(backwardColor);
+					//set_temp_color(backwardColor);
 					_delay_ms(2000); //twinkle(0, 0, 0);
 					ioport_set_pin_low(IOPORT_CREATE_PIN(PORTA, 7));
 					break;
 				case VOLUP:
 					ioport_set_pin_high(IOPORT_CREATE_PIN(PORTD, 6));
 					//twinkle(0, 255, 255);
-					set_temp_color(volumeUpColor);
+					//set_temp_color(volumeUpColor);
 					_delay_ms(2000); //twinkle(0, 0, 0);
 					ioport_set_pin_low(IOPORT_CREATE_PIN(PORTD, 6));
 					break;
 				case VOLDOWN:
 					ioport_set_pin_high(IOPORT_CREATE_PIN(PORTR, 0));
 					//twinkle(0, 0, 255);
-					set_temp_color(volumeDownColor);
+					//set_temp_color(volumeDownColor);
 					_delay_ms(2000); //twinkle(0, 0, 0);
 					ioport_set_pin_low(IOPORT_CREATE_PIN(PORTR, 0));
 					break;
 				case CONNDISC:
 					ioport_set_pin_high(IOPORT_CREATE_PIN(PORTD, 0));
 					//twinkle(255, 0, 255);
-					set_temp_color(connDiscColor);
+					//set_temp_color(connDiscColor);
 					_delay_ms(2000); //twinkle(0, 0, 0);
 					ioport_set_pin_low(IOPORT_CREATE_PIN(PORTD, 0));
 					break;
 				case INQUIRE:
 					ioport_set_pin_high(IOPORT_CREATE_PIN(PORTD, 1));
 					//twinkle(255, 255, 255);
-					set_temp_color(inquiryColor);
+					//set_temp_color(inquiryColor);
 					_delay_ms(2000); //twinkle(0, 0, 0);
 					ioport_set_pin_low(IOPORT_CREATE_PIN(PORTD, 1));
 					break;

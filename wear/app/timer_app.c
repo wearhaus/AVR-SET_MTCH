@@ -24,6 +24,11 @@ static inline void timer4_overflow_interrupt_callback(void)
 
 static inline void timer5_overflow_interrupt_callback(void)
 {
+	/*
+	#ifdef ZXL_WDT_ENABLE
+		wdt_reset();
+	#endif
+	*/
 	flag_timer5 = true;/*
 	if (flag_initcharge) {
 		flag_initcharge = false;
