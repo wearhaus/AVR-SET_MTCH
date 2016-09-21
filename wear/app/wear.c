@@ -770,11 +770,16 @@ void test(void)
 
 ISR(PORTD_INT_vect)
 {
+      unsigned int count=0;
 	PORTD.INTFLAGS = 0x20;
 
 	clear_led();
 	while(1)
 	{
+#ifdef LIMIT_LOOP
+           if(count++>10000)
+		   	break;
+#endif
 		;
 	}
 }

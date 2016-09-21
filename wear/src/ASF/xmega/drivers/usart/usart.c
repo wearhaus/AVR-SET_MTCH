@@ -58,6 +58,8 @@
 #  define USART_DORD_bm 0x04
 #endif
 
+#define LIMIT_LOOP  //avoid loop too long time when problem happen.
+
 /**
  * \brief Initialize USART in RS232 mode.
  *
@@ -215,7 +217,13 @@ void usart_init_spi(USART_t *usart, const usart_spi_options_t *opt)
  */
 enum status_code usart_putchar(USART_t *usart, uint8_t c)
 {
+      unsigned int count=0;
+	  
 	while (usart_data_register_is_empty(usart) == false) {
+#ifdef LIMIT_LOOP
+           if(count++>10000)
+		   	break;
+#endif
 	}
 	
 	(usart)->DATA = c;
@@ -233,7 +241,13 @@ enum status_code usart_putchar(USART_t *usart, uint8_t c)
  */
 uint8_t usart_getchar(USART_t *usart)
 {
+      unsigned int count=0;
+	  
 	while (usart_rx_is_complete(usart) == false) {
+#ifdef LIMIT_LOOP
+           if(count++>10000)
+		   break;
+#endif		
 	}
 	
 	return ((uint8_t)(usart)->DATA);

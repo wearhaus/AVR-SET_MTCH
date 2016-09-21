@@ -20,6 +20,9 @@
 #define ENABLE_USARTD0
 //#define ENABLE_USARTC0_REMAP
 
+#define ENABLE_WDT
+#define LIMIT_LOOP  //avoid loop too long time when problem happen.
+
 /*
 	WS2812 config
 */

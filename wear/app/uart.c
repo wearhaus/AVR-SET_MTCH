@@ -11,6 +11,7 @@
 #include <uart.h>
 #include <wear.h>
 #include <adc_app.h>
+#include <mtch6301.h>
 
 uint8_t rxmode=0,num_rx=0;
 uint8_t uart_length = 6;
@@ -25,7 +26,7 @@ bool uart_done_flag = false;
    The second byte shall be the size of the payload
    The rest shall be data 
 */
-volatile uint8_t buffer_data[11] = {128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128};
+volatile uint8_t buffer_data[13] = {128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128,0,0};
 volatile uint8_t colors[9] = {255, 0, 0, 0, 255, 0, 0, 0, 255};
 	
 bool pulse_state = false;
@@ -330,6 +331,10 @@ void trigger_pulse_state_changed(void) {
 static void interpret_message(void) {
 	switch(buffer_data[0]) {
 		case UART_SET_COLOR:
+	#ifdef LIMIT_LOOP //only handle correct format	
+			if(buffer_data[1]!=UART_COLOR_LEN)
+				break;
+	#endif	
 			send_response(UART_SET_COLOR, 0xff);
 			set_color_from_buffer();
 			break;
@@ -431,17 +436,70 @@ ISR(USARTC0_RXC_vect)
 	uart_protocal(usart_getchar(&USARTC0));
 }
 
+
+unsigned char uartCmdValid(unsigned char cmd)
+{
+    unsigned char retval=false;
+    switch(cmd){
+		case UART_SET_COLOR:
+		case UART_SET_PULSE:
+		case UART_SET_SHUTDOWN:
+		case UART_SET_CHG_LVL:	
+		case UART_SET_CHG_BRIGHT:	
+		case UART_SET_LOW_DIVIDER:	
+		case UART_SET_MID_DIVIDER:
+		case UART_SET_HIGH_DIVIDER:
+		case UART_GET_AMBIENT:
+		case UART_GET_BATTERY:
+		case UART_GET_PULSE:
+		case UART_GET_COLOR:
+		case UART_GET_CHARGING:
+			retval=true;
+			break;		
+		
+		default:
+			break;
+	}
+	return retval;
+
+}
+
 /*
 brief RX complete interrupt service routine.
 */
 ISR(USARTD0_RXC_vect)
 {
+	 unsigned int count=0;
+	 unsigned char errflag=0;
 	// twinkle(buffer_data[0], buffer_data[1], buffer_data[2]);
-	for (int i=0; i<11; i++) {
+	/*for (int i=0; i<11; i++) {
 		buffer_data[i] = usart_getchar(&USARTD0);
+	}*/
+	
+
+     
+	for (int i=0; i<11; i++) {
+		while (usart_rx_is_complete(&USARTD0) == false) {
+#ifdef LIMIT_LOOP //do not wait for ever.
+               if(count++>10000)
+	         {
+		   	errflag=1;
+		      break;
+		   }
+#endif		
+	      }
+		//do not read when error
+		if(errflag)
+			break;
+	      buffer_data[i] =((uint8_t)(&USARTD0)->DATA);
 	}
 	
+	// check data format. 
+	if(uartCmdValid(buffer_data[0])&&(errflag==0||(errflag&&buffer_data[1]<9)))
+	{
 	interpret_message();
+          errflag=0;
+	}
 	
 	uart_done_flag = true;
 	

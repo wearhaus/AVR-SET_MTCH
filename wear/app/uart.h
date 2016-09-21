@@ -48,6 +48,7 @@ typedef struct
 #define UART_BRIGHT_LEN		1
 #define UART_DIV_LEN		1
 #define UART_TEMP_LEN       1
+#define UART_SHUTDOWN_LEN       0
 
 
 void init_uart(void);
@@ -67,7 +68,7 @@ bool get_and_clear_pulse_state_changed(void);
 void trigger_pulse_state_changed(void);
 void led_set_from_colors(void);
 
-extern volatile uint8_t buffer_data[11];
+extern volatile uint8_t buffer_data[13];
 extern volatile uint8_t colors[9];
 extern bool shutdown_received;
 extern bool uart_done_flag;

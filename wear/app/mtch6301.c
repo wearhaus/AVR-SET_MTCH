@@ -40,7 +40,15 @@ void init_i2c(void)
 
 static inline void wait_result(void)
 {
-	while(cmd_res == 0x01);
+      unsigned int count=0;
+	while(cmd_res == 0x01)
+	{
+#ifdef LIMIT_LOOP
+           if(count++>10000)
+		   	break;
+#endif
+	    ;
+	}
 	
 	cmd_res = 0x01;
 }	

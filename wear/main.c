@@ -93,13 +93,6 @@ int main(void)
 	//board_init();
 //	ioport_configure_pin(IOPORT_CREATE_PIN(PORTC, 3), IOPORT_DIR_OUTPUT | IOPORT_INIT_LOW);
 
-#ifdef ZXL_WDT_ENABLE
-	/* Set the timeout period for the watchdog - 8 ms */
-	wdt_set_timeout_period(WDT_TIMEOUT_PERIOD_2KCLK);
-    wdt_reset(); 
-	wdt_enable();
-#endif	
-	
 	init_uart();
 	init_ws2812(IOPORT_CREATE_PIN(PORTC, 6));
 	clear_led();
@@ -148,7 +141,8 @@ int main(void)
 		tc45_enable(&TCC5);
 	}
 	else*/
-	(!ischarging()){
+	(!ischarging())
+	{
 		old_core_status = core_status;
 		core_status = STATUS_BATT_READ;
 		change_adc_channel(core_status);
@@ -158,14 +152,18 @@ int main(void)
 	}
 	
 	/* Charging and watchdog timer - Using two compare channels with single timer */
-	//init_timerd5();
+#ifdef ENABLE_WDT
+	wdt_set_timeout_period(WDT_TIMEOUT_PERIOD_2KCLK);
+      wdt_reset(); 
+	wdt_enable();
+	init_timerd5();
+#endif	
+
 	
 	// Insert application code here, after the board has been initialized.
 	while(1)
 	{
-        #ifdef ZXL_WDT_ENABLE
-                wdt_reset(); 
-        #endif
+
 		if (latest_gesture) {
 			//twinkle(255, 0, 255);
 			switch (latest_gesture) {
@@ -225,7 +223,9 @@ int main(void)
 			//twinkle(0, 0, 0);
 		}
 		
-		if (ischarging()) {
+	
+		if (ischarging()) 
+		{
 			if (core_status != STATUS_CHARGE)
 			{
 				twinkle(0, 0, 255);
@@ -238,7 +238,8 @@ int main(void)
 				tc45_enable(&TCC5);
 			}
 		}
-		else {
+		else 	
+		{
 			if (core_status == STATUS_CHARGE) {
 				old_core_status = core_status;
 				core_status = STATUS_BATT_READ;
@@ -311,6 +312,7 @@ int main(void)
 							//	usart_putchar(M_USART, 0x66);
 
 							run();
+							
 							if (ischarging())
 							{
 								old_core_status = core_status;
@@ -339,13 +341,13 @@ int main(void)
 				}
 			}
 		}
-		/*
-		if (flag_timer5) {
-			flag_timer5 = false;
-			update_led_charge();
+
+	#ifdef ENABLE_WDT
+		if (flag_timerd5) {
+			flag_timerd5 = false;
+			wdt_reset(); 
 		}
-		*/
-		
+      #endif			
 		
 		
 		

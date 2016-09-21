@@ -24,11 +24,6 @@ static inline void timer4_overflow_interrupt_callback(void)
 
 static inline void timer5_overflow_interrupt_callback(void)
 {
-	/*
-	#ifdef ZXL_WDT_ENABLE
-		wdt_reset();
-	#endif
-	*/
 	flag_timer5 = true;/*
 	if (flag_initcharge) {
 		flag_initcharge = false;
@@ -97,7 +92,7 @@ void init_timer5(void)
 
 void init_timerd5(void)
 {
-	//tc45_enable(&TCD5);
+	tc45_enable(&TCD5);
 	tc45_set_overflow_interrupt_level(&TCD5, TC45_INT_LVL_LO);
 	/* Configure TC in normal mode */
 	tc45_set_wgm(&TCD5, TC45_WG_NORMAL);
