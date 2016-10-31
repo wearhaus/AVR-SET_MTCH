@@ -58,6 +58,7 @@ void send_light_data(void);
 void send_battery_data(void);
 void send_color_data(void);
 void send_pulse_data(void);
+void send_mtch_data(uint8_t index, uint8_t offset);
 void load_data_color_led(void);
 void rainbow(void);
 void init_charge(void);

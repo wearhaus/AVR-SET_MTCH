@@ -237,6 +237,11 @@ static inline void set_color_from_buffer(void) {
 	}
 }
 
+static inline void set_mtch_register_from_buffer(void) {
+	cmd_write_register(buffer_data[2], buffer_data[3], buffer_data[4]);
+}
+
+
 void led_set_from_colors(void) {
 	m_led_struct[0].r = colors[0];
 	m_led_struct[0].g = colors[1];
@@ -420,6 +425,14 @@ static void interpret_message(void) {
 		case UART_GET_CHARGING:
 			send_charging_data();
 			break;		
+			
+		case UART_SET_MTCH:
+			set_mtch_register_from_buffer();
+			break;
+			
+		case UART_GET_MTCH:
+			send_mtch_data(buffer_data[2], buffer_data[3]);
+			break;
 		
 		default:
 			break;
@@ -454,6 +467,8 @@ unsigned char uartCmdValid(unsigned char cmd)
 		case UART_GET_PULSE:
 		case UART_GET_COLOR:
 		case UART_GET_CHARGING:
+		case UART_SET_MTCH:
+		case UART_GET_MTCH:
 			retval=true;
 			break;		
 		

@@ -11,6 +11,7 @@
 #include <config_app.h>
 #include <uart.h>
 #include <adc_app.h>
+#include <mtch6301.h>
 #include "eeprom.h"
 //1720------4.20V
 //1670------4.08V
@@ -822,6 +823,18 @@ void send_charging_data(void)
 	uart_send_bytes(resp, 2);
 }
 
+void send_mtch_data(uint8_t index, uint8_t offset)
+{
+	uint8_t resp[4] = {0};
+	
+	resp[3] = read_register(buffer_data[2], buffer_data[3]);
+	resp[2] = offset;
+	resp[1] = index;
+	resp[0] = UART_GET_MTCH;
+	
+    uart_send_bytes(resp, 4);
+}
+
 void send_color_data(void)
 {
 	uint8_t resp[10] = {0};
@@ -831,7 +844,7 @@ void send_color_data(void)
 		resp[i] = colors[i];
 	}
 	
-	uart_send_bytes(resp, 9);
+	uart_send_bytes(resp, 10);
 }
 
 void send_pulse_data(void)
@@ -841,7 +854,7 @@ void send_pulse_data(void)
 	resp[1] = get_pulse_state();
 	resp[0] = UART_GET_PULSE;
 	
-	uart_send_bytes(resp, 3);
+	uart_send_bytes(resp, 2);
 }
 
 void load_buff_data_color_led(void)

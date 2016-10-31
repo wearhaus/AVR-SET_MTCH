@@ -40,7 +40,10 @@ typedef struct
 #define UART_GET_PULSE			0x70
 #define UART_GET_BATTERY		0x42
 #define UART_GET_AMBIENT		0x4d
-#define UART_GET_CHARGING		0x47
+#define UART_GET_CHARGING		0x47	
+
+#define UART_SET_MTCH			0x54
+#define UART_GET_MTCH			0x48
 
 #define UART_COLOR_LEN      9
 #define UART_PULSE_LEN      1
@@ -48,7 +51,7 @@ typedef struct
 #define UART_BRIGHT_LEN		1
 #define UART_DIV_LEN		1
 #define UART_TEMP_LEN       1
-#define UART_SHUTDOWN_LEN       0
+#define UART_SHUTDOWN_LEN   0
 
 
 void init_uart(void);
