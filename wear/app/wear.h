@@ -64,5 +64,7 @@ void rainbow(void);
 void init_charge(void);
 void save_led_to_eeprom(void);
 void send_charging_data(void);
+void send_mtch_update_status(void);
+void wdt_kick(void);
 
 #endif /* WEAR_H_ */

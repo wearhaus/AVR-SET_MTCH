@@ -124,9 +124,14 @@ static inline bool twim_idle (const TWI_t * twi)
  */
 static inline status_code_t twim_acquire(bool no_wait)
 {
+	int count=0;
 	while (transfer.locked) {
 
 		if (no_wait) { return ERR_BUSY; }
+		#ifdef LIMIT_LOOP
+			if(count++>10000)
+			return ERR_BUSY;
+		#endif
 	}
 
 	irqflags_t const flags = cpu_irq_save ();
@@ -161,9 +166,22 @@ static inline status_code_t twim_release(void)
 	 * other than a transfer in-progress, then test the bus interface
 	 * for an Idle bus state.
 	 */
-	while (OPERATION_IN_PROGRESS == transfer.status);
-
-	while (! twim_idle(transfer.bus)) { barrier(); }
+	int count=0;
+	while (OPERATION_IN_PROGRESS == transfer.status) {
+		#ifdef LIMIT_LOOP
+			if(count++>10000)
+			return ERR_BUSY;
+		#endif
+	};
+	
+	count=0;
+	while (! twim_idle(transfer.bus)) { 
+		barrier(); 
+		#ifdef LIMIT_LOOP
+			if(count++>10000)
+			return ERR_BUSY;
+		#endif
+	}
 
 	status_code_t const status = transfer.status;
 

@@ -237,10 +237,6 @@ static inline void set_color_from_buffer(void) {
 	}
 }
 
-static inline void set_mtch_register_from_buffer(void) {
-	cmd_write_register(buffer_data[2], buffer_data[3], buffer_data[4]);
-}
-
 
 void led_set_from_colors(void) {
 	m_led_struct[0].r = colors[0];
@@ -427,11 +423,41 @@ static void interpret_message(void) {
 			break;		
 			
 		case UART_SET_MTCH:
-			set_mtch_register_from_buffer();
+			nvm_eeprom_write_byte(buffer_data[2], buffer_data[3]);
+			
+			if (buffer_data[2] <= 15) {
+				nvm_eeprom_write_byte(EEPROM_INDEX_GENERAL, 1);
+			}
+			else if (buffer_data[2] <= 28) {
+				nvm_eeprom_write_byte(EEPROM_INDEX_RXMAP, 1);
+			}
+			else if (buffer_data[2] <= 46) {
+				nvm_eeprom_write_byte(EEPROM_INDEX_TXMAP, 1);
+			}
+			else if (buffer_data[2] <= 48) {
+				nvm_eeprom_write_byte(EEPROM_INDEX_SELF, 1);
+			}
+			else if (buffer_data[2] <= 50) {
+				nvm_eeprom_write_byte(EEPROM_INDEX_MUTUAL, 1);
+			}
+			else if (buffer_data[2] <= 56) {
+				nvm_eeprom_write_byte(EEPROM_INDEX_DECODING, 1);
+			}
+			else if (buffer_data[2] <= 69) {
+				nvm_eeprom_write_byte(EEPROM_INDEX_GESTURES, 1);
+			}
+			else if (buffer_data[2] <= 76) {
+				nvm_eeprom_write_byte(EEPROM_INDEX_CONFIG, 1);
+			}
+			nvm_eeprom_write_byte(EEPROM_INDEX_MTCH, 1);
 			break;
 			
 		case UART_GET_MTCH:
-			send_mtch_data(buffer_data[2], buffer_data[3]);
+			send_mtch_update_status();
+			break;
+			
+		case UART_SET_RESTART:
+			while(1) {barrier();}
 			break;
 		
 		default:
@@ -439,6 +465,7 @@ static void interpret_message(void) {
 	}
 	return;
 }
+
 
 /*
 brief RX complete interrupt service routine.
@@ -469,6 +496,7 @@ unsigned char uartCmdValid(unsigned char cmd)
 		case UART_GET_CHARGING:
 		case UART_SET_MTCH:
 		case UART_GET_MTCH:
+		case UART_SET_RESTART:
 			retval=true;
 			break;		
 		

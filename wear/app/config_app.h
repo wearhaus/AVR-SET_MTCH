@@ -145,6 +145,110 @@
 #define EEPROM_LED3_G_BYTE				nvm_eeprom_read_byte(8)
 #define EEPROM_LED3_B_BYTE				nvm_eeprom_read_byte(9)
 
+/* MTCH6301 Writeable registers - in order listed on datasheet */
+//GENERAL - INDEX 0x00
+#define EEPROM_NUMRXCHANNELS			nvm_eeprom_read_byte(10)
+#define EEPROM_NUMTXCHANNELS			nvm_eeprom_read_byte(11)
+#define EEPROM_RXSCALE_7_0				nvm_eeprom_read_byte(12)
+#define EEPROM_RXSCALE_15_8				nvm_eeprom_read_byte(13)
+#define EEPROM_TXSCALE_7_0				nvm_eeprom_read_byte(14)
+#define EEPROM_TXSCALE_15_8				nvm_eeprom_read_byte(15)
+
+//RXMAP - INDEX 0x01
+#define EEPROM_RXPIN0					nvm_eeprom_read_byte(16)
+#define EEPROM_RXPIN1					nvm_eeprom_read_byte(17)
+#define EEPROM_RXPIN2					nvm_eeprom_read_byte(18)
+#define EEPROM_RXPIN3 					nvm_eeprom_read_byte(19)
+#define EEPROM_RXPIN4					nvm_eeprom_read_byte(20)
+#define EEPROM_RXPIN5 					nvm_eeprom_read_byte(21)
+#define EEPROM_RXPIN6 					nvm_eeprom_read_byte(22)
+#define EEPROM_RXPIN7  					nvm_eeprom_read_byte(23)
+#define EEPROM_RXPIN8  					nvm_eeprom_read_byte(24)
+#define EEPROM_RXPIN9   				nvm_eeprom_read_byte(25)
+#define EEPROM_RXPIN10					nvm_eeprom_read_byte(26) 
+#define EEPROM_RXPIN11					nvm_eeprom_read_byte(27)  
+#define EEPROM_RXPIN12					nvm_eeprom_read_byte(28)     
+
+//TXMAP - INDEX 0x02
+#define EEPROM_TXPIN0					nvm_eeprom_read_byte(29)
+#define EEPROM_TXPIN1   				nvm_eeprom_read_byte(30)     
+#define EEPROM_TXPIN2       			nvm_eeprom_read_byte(31)
+#define EEPROM_TXPIN3      				nvm_eeprom_read_byte(32)
+#define EEPROM_TXPIN4       			nvm_eeprom_read_byte(33)
+#define EEPROM_TXPIN5       			nvm_eeprom_read_byte(34)
+#define EEPROM_TXPIN6       			nvm_eeprom_read_byte(35)
+#define EEPROM_TXPIN7       			nvm_eeprom_read_byte(36)
+#define EEPROM_TXPIN8       			nvm_eeprom_read_byte(37)
+#define EEPROM_TXPIN9       			nvm_eeprom_read_byte(38)
+#define EEPROM_TXPIN10					nvm_eeprom_read_byte(39)
+#define EEPROM_TXPIN11     				nvm_eeprom_read_byte(40)
+#define EEPROM_TXPIN12					nvm_eeprom_read_byte(41)
+#define EEPROM_TXPIN13      			nvm_eeprom_read_byte(42)
+#define EEPROM_TXPIN14       			nvm_eeprom_read_byte(43)
+#define EEPROM_TXPIN15        			nvm_eeprom_read_byte(44)
+#define EEPROM_TXPIN16       			nvm_eeprom_read_byte(45)
+#define EEPROM_TXPIN17     				nvm_eeprom_read_byte(46)
+
+//SELF - INDEX 0x10
+#define EEPROM_SELFSCANTIME				nvm_eeprom_read_byte(47)
+#define EEPROM_SELFTOUCHTHRES			nvm_eeprom_read_byte(48)
+
+//MUTUAL - INDEX 0x20
+#define EEPROM_MUTSCANTIME				nvm_eeprom_read_byte(49)
+#define EEPROM_MUTTOUCHTHRES			nvm_eeprom_read_byte(50)
+
+//DECODING - INDEX 0x30
+#define EEPROM_FLIPSTATE				nvm_eeprom_read_byte(51)
+#define EEPROM_NUMAVG					nvm_eeprom_read_byte(52)
+#define EEPROM_MINTOUCHDIST				nvm_eeprom_read_byte(53)
+#define EEPROM_PENDOWNTIME				nvm_eeprom_read_byte(54)
+#define EEPROM_PENUPTIME				nvm_eeprom_read_byte(55)
+#define EEPROM_TOUCHSUPPRESSION			nvm_eeprom_read_byte(56)
+
+//GESTURES - INDEX 0x50
+#define EEPROM_RXSWIPELEN				nvm_eeprom_read_byte(57)
+#define EEPROM_TXSWIPELEN				nvm_eeprom_read_byte(58)
+#define EEPROM_SWIPEBOUNDARY			nvm_eeprom_read_byte(59)
+#define EEPROM_SWIPEHOLDTHRES			nvm_eeprom_read_byte(60)
+#define EEPROM_SWIPETIME_7_0   			nvm_eeprom_read_byte(61)
+#define EEPROM_SWIPETIME_15_8  			nvm_eeprom_read_byte(62)
+#define EEPROM_TAPTIME_7_0     			nvm_eeprom_read_byte(63)
+#define EEPROM_TAPTIME_15_8   			nvm_eeprom_read_byte(64)
+#define EEPROM_TAPTHRES        			nvm_eeprom_read_byte(65)
+#define EEPROM_MINSWIPEVELOCITY			nvm_eeprom_read_byte(66)
+#define EEPROM_DOUBLETIME_7_0   		nvm_eeprom_read_byte(67)
+#define EEPROM_DOUBLETIME_15_8  		nvm_eeprom_read_byte(68)
+#define EEPROM_EDGEKEEPOUT     			nvm_eeprom_read_byte(69)
+
+//CONFIG - INDEX 0xf0
+#define EEPROM_SLEEP_7_0       			nvm_eeprom_read_byte(70)
+#define EEPROM_SLEEP_15_8      			nvm_eeprom_read_byte(71)
+#define EEPROM_SLEEP_23_16     			nvm_eeprom_read_byte(72)
+#define EEPROM_SLEEP_31_24     			nvm_eeprom_read_byte(73)
+#define EEPROM_TOUCHPACKETCFG  			nvm_eeprom_read_byte(74)
+#define EEPROM_GESTUREPACKETCFG			nvm_eeprom_read_byte(75)
+#define EEPROM_STATUSPACKETCFG			nvm_eeprom_read_byte(76)
+
+//INDEX UPDATED FLAGS
+#define EEPROM_INDEX_GENERAL			77
+#define EEPROM_INDEX_RXMAP				78
+#define EEPROM_INDEX_TXMAP				79
+#define EEPROM_INDEX_SELF				80
+#define EEPROM_INDEX_MUTUAL				81
+#define EEPROM_INDEX_DECODING			82
+#define EEPROM_INDEX_GESTURES			83
+#define EEPROM_INDEX_CONFIG				84
+#define EEPROM_INDEX_MTCH				85
+
+#define EEPROM_GENERAL_UPDATE_BOOL		nvm_eeprom_read_byte(EEPROM_INDEX_GENERAL)	
+#define EEPROM_RXMAP_UPDATE_BOOL		nvm_eeprom_read_byte(EEPROM_INDEX_RXMAP)	
+#define EEPROM_TXMAP_UPDATE_BOOL		nvm_eeprom_read_byte(EEPROM_INDEX_TXMAP)	
+#define EEPROM_SELF_UPDATE_BOOL			nvm_eeprom_read_byte(EEPROM_INDEX_SELF)
+#define EEPROM_MUTUAL_UPDATE_BOOL		nvm_eeprom_read_byte(EEPROM_INDEX_MUTUAL)	
+#define EEPROM_DECODING_UPDATE_BOOL		nvm_eeprom_read_byte(EEPROM_INDEX_DECODING)
+#define EEPROM_GESTURES_UPDATE_BOOL		nvm_eeprom_read_byte(EEPROM_INDEX_GESTURES)		
+#define EEPROM_CONFIG_UPDATE_BOOL		nvm_eeprom_read_byte(EEPROM_INDEX_CONFIG)	
+#define EEPROM_MTCH_UPDATE_BOOL			nvm_eeprom_read_byte(EEPROM_INDEX_MTCH)
 
 // Command ID's for all messages
 #define LED_COLOR_ID 0x00

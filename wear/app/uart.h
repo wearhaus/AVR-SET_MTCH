@@ -27,6 +27,7 @@ typedef struct
 
 #define UART_SET_COLOR			0x43
 #define UART_SET_PULSE			0x50
+#define UART_SET_RESTART		0x52
 #define UART_SET_SHUTDOWN		0x01
 
 #define UART_SET_CHG_LVL		0x02

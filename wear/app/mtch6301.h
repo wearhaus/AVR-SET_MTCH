@@ -55,10 +55,11 @@ typedef struct
 void init_mtch6301(void);
 void read_device_id(void);
 void cmd_mtch6301(uint8_t cmd);
-void cmd_write_register(uint8_t index, uint8_t offset, uint8_t value);
+bool cmd_write_register(uint8_t index, uint8_t offset, uint8_t value);
 uint8_t read_register(uint8_t index, uint8_t offset);
 void init_i2c(void);
 void init_mtchio(void);
+bool write_mtch_settings(void);
 
 extern volatile uint8_t latest_gesture;
 

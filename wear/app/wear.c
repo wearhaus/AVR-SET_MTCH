@@ -835,6 +835,15 @@ void send_mtch_data(uint8_t index, uint8_t offset)
     uart_send_bytes(resp, 4);
 }
 
+void send_mtch_update_status(void) {
+	uint8_t resp[2] = {0};
+	
+	resp[1] = EEPROM_MTCH_UPDATE_BOOL;
+	resp[0] = UART_GET_MTCH;
+	
+	uart_send_bytes(resp, 2);
+}
+
 void send_color_data(void)
 {
 	uint8_t resp[10] = {0};
@@ -928,6 +937,13 @@ void restore_state_eep(void)
 	{
 		fht_flag = false;
 		restore_led_from_eeprom();
+	}
+}
+
+void wdt_kick(void) {
+	if (flag_timerd5) {
+		flag_timerd5 = false;
+		wdt_reset();
 	}
 }
 
