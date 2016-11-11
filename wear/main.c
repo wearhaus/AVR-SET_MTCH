@@ -91,7 +91,7 @@ int main(void)
 	// Insert system clock initialization code here (sysclk_init()).
 	sysclk_init();
 
-	/*
+	
 	nvm_eeprom_write_byte(10, 0x07);
 	nvm_eeprom_write_byte(11, 0x05);
 	nvm_eeprom_write_byte(12, 0x92);
@@ -166,7 +166,7 @@ int main(void)
 	nvm_eeprom_write_byte(74, 0x01);
 	nvm_eeprom_write_byte(75, 0x81);
 	nvm_eeprom_write_byte(76, 0x01);
-	*/
+	
 	
 		/* Charging and watchdog timer - Using two compare channels with single timer */
 	#ifdef ENABLE_WDT
@@ -202,10 +202,10 @@ int main(void)
 	*/
 	//board_init();
 //	ioport_configure_pin(IOPORT_CREATE_PIN(PORTC, 3), IOPORT_DIR_OUTPUT | IOPORT_INIT_LOW);
-
+/*
 	init_uart();
 	
-	init_chargingpin(IOPORT_CREATE_PIN(PORTR, 1));
+	init_chargingpin(IOPORT_CREATE_PIN(PORTR, 1));*/
 	/*
 	volatile uint8_t eep0 = nvm_eeprom_read_byte(0);
 	volatile uint8_t eep1 = nvm_eeprom_read_byte(1);
@@ -223,7 +223,7 @@ int main(void)
 	// restore_state_eep();
 	
 	
-	/*
+	
 	volatile uint8_t eep0 = EEPROM_GENERAL_UPDATE_BOOL	;
 	volatile uint8_t eep1 = EEPROM_GENERAL_UPDATE_BOOL	;
 	volatile uint8_t eep2 = EEPROM_RXMAP_UPDATE_BOOL	;
@@ -241,14 +241,14 @@ int main(void)
 	nvm_eeprom_write_byte(EEPROM_INDEX_TXMAP, 1);
 	nvm_eeprom_write_byte(EEPROM_INDEX_SELF, 1);
 	nvm_eeprom_write_byte(EEPROM_INDEX_MUTUAL, 1);
-	nvm_eeprom_write_byte(EEPROM_INDEX_DECODING, 1);
-	nvm_eeprom_write_byte(EEPROM_INDEX_GESTURES, 1);
+	nvm_eeprom_write_byte(EEPROM_INDEX_DECODING, 0);
+	nvm_eeprom_write_byte(EEPROM_INDEX_GESTURES, 0);
 	nvm_eeprom_write_byte(EEPROM_INDEX_CONFIG, 1);
 	nvm_eeprom_write_byte(EEPROM_INDEX_MTCH, 1);
-	*/
+	
 	
 	restore_led_from_eeprom();
-	
+	/*
 	core_status = STATUS_CHARGE;
 	change_adc_channel(core_status);
 	flag_initcharge = true;
@@ -266,7 +266,7 @@ int main(void)
 		tc45_disable(&TCC4);
 		tc45_enable(&TCC5);
 	}
-	else*/
+	else
 	(!ischarging())
 	{
 		old_core_status = core_status;
@@ -279,11 +279,23 @@ int main(void)
 	
 
 
-	
+	*/
 	// Insert application code here, after the board has been initialized.
 	while(1)
 	{
-
+		if (eep9) {
+			twinkle(255, 0, 0);
+			_delay_ms(20000);
+			twinkle(0, 0, 0);
+			_delay_ms(20000);
+		}
+		else {
+			rainbow();
+			_delay_ms(20000);
+			twinkle(0, 255, 0);
+			_delay_ms(20000);
+		}
+/*
 		if (latest_gesture) {
 			//twinkle(255, 0, 255);
 			switch (latest_gesture) {
@@ -461,7 +473,7 @@ int main(void)
 				}
 			}
 		}
-
+*/
 	#ifdef ENABLE_WDT
 		if (flag_timerd5) {
 			flag_timerd5 = false;
