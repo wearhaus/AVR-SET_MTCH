@@ -163,9 +163,11 @@ int main(void)
 	nvm_eeprom_write_byte(71, 0x1f);
 	nvm_eeprom_write_byte(72, 0x00);
 	nvm_eeprom_write_byte(73, 0x00);
-	nvm_eeprom_write_byte(74, 0x01);
+	nvm_eeprom_write_byte(74, 0x81);
 	nvm_eeprom_write_byte(75, 0x81);
 	nvm_eeprom_write_byte(76, 0x01);
+	
+	nvm_eeprom_write_byte(51, 0x01);
 	
 	
 		/* Charging and watchdog timer - Using two compare channels with single timer */
